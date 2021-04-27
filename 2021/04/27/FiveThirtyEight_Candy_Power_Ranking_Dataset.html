@@ -1,0 +1,356 @@
+
+<p><strong>Performing Data Visulaization</strong> usig different tools like histogram, scatterplot, linecharts etc..</p>
+
+<p><strong>Candy Power Ranking</strong>: Dataset Description</p>
+
+<p>This folder contains the data behind the story The Ultimate Halloween Candy Power Ranking.</p>
+
+<p>candy-data.csv includes attributes for each candy along with its ranking.</p>
+
+<p>For binary variables, <strong>1 means yes, 0 means no.</strong></p>
+
+<p>The data contains the following fields:</p>
+
+<p>chocolate</p>
+
+<p>fruity</p>
+
+<p>caramel</p>
+
+<p>peanutalmondy</p>
+
+<p>nougat</p>
+
+<p>crispedricewafer</p>
+
+<p>hard</p>
+
+<p>bar</p>
+
+<p>pluribus</p>
+
+<p>sugarpercent</p>
+
+<p>pricepercent</p>
+
+<p>winpercent</p>
+
+<p>Find Dataset <a href="https://www.kaggle.com/fivethirtyeight/fivethirtyeight-candy-power-ranking-dataset">Here</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># imports
+</span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'candy-data.csv'</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="s">'competitorname'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_data</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>chocolate</th>
+      <th>fruity</th>
+      <th>caramel</th>
+      <th>peanutyalmondy</th>
+      <th>nougat</th>
+      <th>crispedricewafer</th>
+      <th>hard</th>
+      <th>bar</th>
+      <th>pluribus</th>
+      <th>sugarpercent</th>
+      <th>pricepercent</th>
+      <th>winpercent</th>
+    </tr>
+    <tr>
+      <th>competitorname</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>100 Grand</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.732</td>
+      <td>0.860</td>
+      <td>66.971725</td>
+    </tr>
+    <tr>
+      <th>3 Musketeers</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.604</td>
+      <td>0.511</td>
+      <td>67.602936</td>
+    </tr>
+    <tr>
+      <th>One dime</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.011</td>
+      <td>0.116</td>
+      <td>32.261086</td>
+    </tr>
+    <tr>
+      <th>One quarter</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.011</td>
+      <td>0.511</td>
+      <td>46.116505</td>
+    </tr>
+    <tr>
+      <th>Air Heads</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.906</td>
+      <td>0.511</td>
+      <td>52.341465</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+</code></pre></div></div>
+
+<h1 id="line-chart">Line Chart</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Candy Ranking"</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="p">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">)</span>
+
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f4ec9cb5950&gt;
+</code></pre></div></div>
+
+<p><img src="output_7_1.png" alt="png" /></p>
+
+<p>From the above Lineplot its hard to find out the accurate win percent for any of the competitor.</p>
+
+<p>Let’s try out some other plot.</p>
+
+<h1 id="barplot">BarPlot</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Bar plot for candy data"</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'winpercent'</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"winpercent"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Text(0, 0.5, 'winpercent')
+</code></pre></div></div>
+
+<p><img src="output_10_1.png" alt="png" /></p>
+
+<p>This representation is much better as you can clearly see the winpercent for each competitorname.</p>
+
+<p>Let’s try out plotting Heatmap for candy data.</p>
+
+<h1 id="heatmap">Heatmap</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Heatmap for candy data"</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"competitorname"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Data"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Text(0.5, 42.0, 'Data')
+</code></pre></div></div>
+
+<p><img src="output_13_1.png" alt="png" /></p>
+
+<p>Heatmap doesn’t seem to give some suitable outcome.</p>
+
+<p>Let’s try scatterplot. it depicts the winpercent vs sugarpercent.</p>
+
+<h2 id="scatterplot"><strong>Scatterplot</strong></h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'winpercent'</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'sugarpercent'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f4ebebbed90&gt;
+</code></pre></div></div>
+
+<p><img src="output_16_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Let's distinguish based on whether candy has chocolate or not.
+</span><span class="n">sns</span><span class="p">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'winpercent'</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'sugarpercent'</span><span class="p">],</span> <span class="n">hue</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'chocolate'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f4ebeaa4b50&gt;
+</code></pre></div></div>
+
+<p><img src="output_17_1.png" alt="png" /></p>
+
+<p>Scatterplot shows that the winpercent is more if candy contains chocolate.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Let's add regression line to scatterplot
+</span><span class="n">sns</span><span class="p">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'winpercent'</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'sugarpercent'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f4ebe9f40d0&gt;
+</code></pre></div></div>
+
+<p><img src="output_19_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># We can also add 2 regression lines too
+</span><span class="n">sns</span><span class="p">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s">"winpercent"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span> <span class="s">"sugarpercent"</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s">"chocolate"</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;seaborn.axisgrid.FacetGrid at 0x7f4ebe99e910&gt;
+</code></pre></div></div>
+
+<p><img src="output_20_1.png" alt="png" /></p>
+
+<p>Since, both lines have positive slope means candy having chocolate and no chocolate both have sales. Since chocolate plot overlaps no chocolate plot thus, candy having chocolate have high winpercent.</p>
+
+<p>Categorical Scatter Plot</p>
+
+<p>This depicts a much easier representation of candy data that has chocolate or not.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'chocolate'</span><span class="p">],</span> <span class="n">y</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'winpercent'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f4ebe8d2ed0&gt;
+</code></pre></div></div>
+
+<p><img src="output_22_1.png" alt="png" /></p>
+
+<p>We, can conclude that candy containing chocolate has higher win percent than candy that does not contain chocolate.</p>
+
+<h2 id="distributions---histograms-and-density-plots"><strong>Distributions - Histograms and Density Plots</strong></h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'winpercent'</span><span class="p">],</span> <span class="n">kde</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.7/dist-packages/seaborn/distributions.py:2557: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
+  warnings.warn(msg, FutureWarning)
+
+
+
+
+
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f4ebe8f6850&gt;
+</code></pre></div></div>
+
+<p><img src="output_25_2.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Let's try Kernel Density estimator (KDE)
+</span><span class="n">sns</span><span class="p">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'winpercent'</span><span class="p">],</span> <span class="n">shade</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Shade colors the area under curve
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f4ebe811fd0&gt;
+</code></pre></div></div>
+
+<p><img src="output_26_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># we can even plot a 2D KDE plot with dark background color
+</span><span class="n">sns</span><span class="p">.</span><span class="n">set_style</span><span class="p">(</span><span class="s">"dark"</span><span class="p">)</span>  <span class="c1">#darkgrid, whitegrid, dark, white, ticks
+</span><span class="n">sns</span><span class="p">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'winpercent'</span><span class="p">],</span> <span class="n">y</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'chocolate'</span><span class="p">],</span> <span class="n">kind</span> <span class="o">=</span> <span class="s">"kde"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;seaborn.axisgrid.JointGrid at 0x7f4ebfcdb310&gt;
+</code></pre></div></div>
+
+<p><img src="output_27_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Let's add color coded plots
+</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'sugarpercent'</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s">"sugarpercent"</span><span class="p">,</span> <span class="n">kde</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="n">my_data</span><span class="p">[</span><span class="s">'pricepercent'</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s">"pricepercent"</span><span class="p">,</span> <span class="n">kde</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"color coded plot for candy data"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.7/dist-packages/seaborn/distributions.py:2557: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
+  warnings.warn(msg, FutureWarning)
+
+
+
+
+
+&lt;matplotlib.legend.Legend at 0x7f4ebbe4c810&gt;
+</code></pre></div></div>
+
+<p><img src="output_28_2.png" alt="png" /></p>
+
